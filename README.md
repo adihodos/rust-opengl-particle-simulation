@@ -7,7 +7,8 @@ OpenGL features used:
 	- separable program shaders
 	- pipelines
 	- shader storage buffers
-	- instanced drawing  
+	- instanced drawing
+	- 2D texture arrays
 * Platform independent (should run on Windows and any X11).
 * Requires OpenGL version 4.5 or higher
 
