@@ -31,6 +31,14 @@ where
         unsafe { std::slice::from_raw_parts_mut(self as *mut Self as *mut T, 2) }
     }
 
+    pub fn as_ptr(&self) -> *const T {
+        &self.x as *const _
+    }
+
+    pub fn as_mut_ptr(&mut self) -> *mut T {
+        &mut self.x as *mut _
+    }
+
     pub fn square_len(&self) -> T {
         self.x * self.x + self.y * self.y
     }
@@ -52,6 +60,26 @@ pub mod consts {
         T: Num + Copy + Clone + std::fmt::Debug,
     {
         TVec2::same(T::zero())
+    }
+
+    pub fn unit_x<T>() -> TVec2<T>
+    where
+        T: Num + Copy + Clone + std::fmt::Debug,
+    {
+        TVec2 {
+            x: T::one(),
+            y: T::zero(),
+        }
+    }
+
+    pub fn unit_y<T>() -> TVec2<T>
+    where
+        T: Num + Copy + Clone + std::fmt::Debug,
+    {
+        TVec2 {
+            x: T::zero(),
+            y: T::one(),
+        }
     }
 }
 

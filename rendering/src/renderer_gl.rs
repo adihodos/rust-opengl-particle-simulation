@@ -79,19 +79,13 @@ impl UniqueBufferMapping {
         buffer: gl::types::GLuint,
         access: gl::types::GLbitfield,
     ) -> Option<UniqueBufferMapping> {
-        // let access = match access {
-        //     BufferAccess::Read => gl::READ_ONLY,
-        //     BufferAccess::Write => gl::WRITE_ONLY,
-        //     BufferAccess::ReadWrite => gl::READ_WRITE,
-        // };
-
         let buffer_size = unsafe {
             let mut bsize = 0i64;
             gl::GetNamedBufferParameteri64v(buffer, gl::BUFFER_SIZE, &mut bsize);
             bsize
         };
 
-        if buffer == 0 {
+        if buffer_size == 0 {
             return None;
         }
 
@@ -114,7 +108,7 @@ impl UniqueBufferMapping {
         }
     }
 
-    pub fn as_slice_mut(&mut self) -> &mut [u8] {
+    pub fn as_mut_slice(&mut self) -> &mut [u8] {
         unsafe {
             std::slice::from_raw_parts_mut(
                 self.mapped_memory as *mut u8,
@@ -135,7 +129,6 @@ impl UniqueBufferMapping {
 impl std::ops::Drop for UniqueBufferMapping {
     fn drop(&mut self) {
         unsafe {
-            // gl::FlushMappedNamedBufferRange(self.buffer, 0, self.mapping_size as isize);
             gl::UnmapNamedBuffer(self.buffer);
         }
     }
@@ -162,7 +155,7 @@ pub fn create_shader_program_from_string(
 
     let prg =
         UniqueShaderProgram::new(unsafe { gl::CreateShaderProgramv(prog_type, 1, x.as_ptr()) })
-            .ok_or("glCreateShaderProgramv() failed".to_string())?;
+            .ok_or_else(|| "glCreateShaderProgramv() failed".to_string())?;
 
     let linked_successfully = (|| {
         let mut link_status = 0i32;
@@ -352,6 +345,13 @@ impl SamplerBuilder {
             s
         })
         .ok_or_else(|| "Failed to create sampler!".to_string())?;
+
+        if let Some(c) = self.border_color {
+            unsafe {
+                let border_color = [c.0, c.1, c.2, c.3];
+                gl::SamplerParameterfv(*s, gl::TEXTURE_BORDER_COLOR, border_color.as_ptr());
+            }
+        }
 
         if let Some(minflt) = self.min_filter {
             unsafe {

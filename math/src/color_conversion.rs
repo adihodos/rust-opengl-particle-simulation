@@ -71,26 +71,6 @@ impl std::convert::From<HsvColor> for RGBAColorF32 {
         };
 
         RGBAColorF32::new(func(5f32), func(3f32), func(1f32))
-
-        // let h = hsv.h / 360f32;
-        // let s = hsv.s * 0.01f32;
-        // let v = hsv.v * 0.01f32;
-
-        // let i = (h * 6f32).floor();
-        // let f = h * 6f32 - i;
-        // let p = v * (1f32 - s);
-        // let q = v * (1f32 - f * s);
-        // let t = v * (1f32 - (1f32 - f) * s);
-
-        // match i as i32 % 6 {
-        //   0 => RGBAColorF32::new(v, t, p),
-        //   1 => RGBAColorF32::new(q, v, p),
-        //   2 => RGBAColorF32::new(p, v, t),
-        //   3 => RGBAColorF32::new(p, q, v),
-        //   4 => RGBAColorF32::new(t, p, v),
-        //   5 => RGBAColorF32::new(v, p, q),
-        //   _ => panic!("Whoaa there buddy! Nice color!"),
-        // }
     }
 }
 
@@ -122,38 +102,6 @@ impl std::convert::From<RGBAColorF32> for HsvColor {
             if n == 0f32 { 0f32 } else { n / v },
             v,
         )
-
-        // let max = rgb.r.max(rgb.g.max(rgb.b));
-        // let min = rgb.r.min(rgb.g.min(rgb.b));
-
-        // let v = max;
-        // let s;
-        // let mut h;
-
-        // if max != 0f32 {
-        //   s = (max - min) / max;
-        // } else {
-        //   s = 0f32;
-        //   h = std::f32::MAX;
-        //   return HsvColor::new(h, s, v);
-        // }
-
-        // let delta = max - min;
-
-        // if max == rgb.r {
-        //   h = (rgb.g - rgb.b) / delta;
-        // } else if rgb.g == max {
-        //   h = 2f32 + (rgb.b - rgb.r) / delta;
-        // } else {
-        //   h = 4f32 + (rgb.r - rgb.g) / delta;
-        // }
-
-        // h *= 60f32;
-        // if h < 0f32 {
-        //   h += 360f32;
-        // }
-
-        // HsvColor::new(h, s, v)
     }
 }
 

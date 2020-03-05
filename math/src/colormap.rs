@@ -69,40 +69,6 @@ pub fn create_linear_colormap(start: RGBAColor, end: RGBAColor, num: u32) -> Vec
 pub struct ColorMap {}
 
 impl ColorMap {
-    // pub fn write_to_file(file: &std::path::Path, colormap: &[RGBAColor], color_blk_size: u32) {
-    //     use crate::image::write_png;
-
-    //     let mut img_pixels = vec![
-    //         RGBAColor::from(StdColors::BLACK);
-    //         colormap.len() * (color_blk_size * color_blk_size) as usize
-    //     ];
-
-    //     (0..color_blk_size).for_each(|y| {
-    //         colormap.iter().enumerate().for_each(|(icol, rgba)| {
-    //             (0..color_blk_size).for_each(|x| {
-    //                 let idx = y as usize * colormap.len() * color_blk_size as usize
-    //                     + (icol * color_blk_size as usize)
-    //                     + x as usize;
-    //                 img_pixels[idx] = *rgba;
-    //             });
-    //         });
-    //     });
-
-    //     let bytes = unsafe {
-    //         std::slice::from_raw_parts(
-    //             img_pixels.as_ptr() as *const u8,
-    //             img_pixels.len() * std::mem::size_of::<RGBAColor>(),
-    //         )
-    //     };
-
-    //     write_png(
-    //         file,
-    //         (colormap.len() * color_blk_size as usize) as u32,
-    //         color_blk_size,
-    //         bytes,
-    //     );
-    // }
-
     pub fn create_linear(start: RGBAColor, end: RGBAColor, num: u32) -> Vec<RGBAColor> {
         let r0 = start.r as f32 / 255f32;
         let g0 = start.g as f32 / 255f32;

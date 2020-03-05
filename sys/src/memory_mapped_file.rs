@@ -140,7 +140,7 @@ pub struct MemoryMappedFile {
 }
 
 impl MemoryMappedFile {
-    // Construct by mapping the specified file into memory
+    /// Construct by mapping the specified file into memory
     #[cfg(unix)]
     pub fn new<P: AsRef<Path>>(path: P) -> std::io::Result<MemoryMappedFile> {
         use libc::{mmap, open, MAP_PRIVATE, O_RDONLY, PROT_READ};

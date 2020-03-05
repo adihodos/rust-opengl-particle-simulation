@@ -98,6 +98,14 @@ where
     pub fn as_slice_mut(&mut self) -> &mut [T] {
         unsafe { std::slice::from_raw_parts_mut(self as *mut Self as *mut T, 4) }
     }
+
+    pub fn as_ptr(&self) -> *const T {
+        &self.r as *const _
+    }
+
+    pub fn as_mut_ptr(&mut self) -> *mut T {
+        &mut self.r as *mut _
+    }
 }
 
 pub type RGBAColor = TColorRGBA<u8>;
